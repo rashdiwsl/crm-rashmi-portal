@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, TrendingUp, Star, Trophy, XCircle, PlusCircle, ArrowRight } from 'lucide-react';
+import { Users, TrendingUp, Star, Trophy, XCircle, PlusCircle, ArrowRight, Phone } from 'lucide-react';
 import api from '../api/axios';
 
 export default function Dashboard() {
@@ -20,6 +20,8 @@ export default function Dashboard() {
       <p className="text-gray-400 text-sm">Loading...</p>
     </div>
   );
+
+  const winRate = stats.total > 0 ? Math.round((stats.won / stats.total) * 100) : 0;
 
   const cards = [
     { label: 'Total Leads', value: stats.total, icon: Users, color: 'bg-blue-600' },
@@ -46,7 +48,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp size={16} className="text-gray-400" />
@@ -55,6 +57,7 @@ export default function Dashboard() {
           <p className="text-3xl font-bold text-gray-900">LKR {stats.totalValue.toLocaleString()}</p>
           <p className="text-xs text-gray-400 mt-2">Across all leads</p>
         </div>
+
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-2">
             <Trophy size={16} className="text-emerald-500" />
@@ -62,6 +65,15 @@ export default function Dashboard() {
           </div>
           <p className="text-3xl font-bold text-emerald-600">LKR {stats.wonValue.toLocaleString()}</p>
           <p className="text-xs text-gray-400 mt-2">Successfully closed</p>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <div className="flex items-center gap-2 mb-2">
+            <Phone size={16} className="text-blue-500" />
+            <p className="text-xs text-gray-400 uppercase font-semibold tracking-wide">Win Rate</p>
+          </div>
+          <p className="text-3xl font-bold text-blue-600">{winRate}%</p>
+          <p className="text-xs text-gray-400 mt-2">{stats.won} won out of {stats.total} total</p>
         </div>
       </div>
 
