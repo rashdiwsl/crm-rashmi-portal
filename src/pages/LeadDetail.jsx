@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Pencil, Send, Trash2, User, Mail, Phone, Briefcase, DollarSign, Calendar } from 'lucide-react';
 import api from '../api/axios';
 import LeadStatusBadge from '../components/LeadStatusBadge';
 
@@ -36,86 +37,100 @@ export default function LeadDetail() {
     fetchLead();
   };
 
-  if (loading) return <div className="p-8 text-gray-500">Loading...</div>;
-  if (!lead) return <div className="p-8 text-gray-500">Lead not found.</div>;
+  if (loading) return <div className="p-8 text-sm text-gray-400">Loading...</div>;
+  if (!lead) return <div className="p-8 text-sm text-gray-400">Lead not found.</div>;
 
   const details = [
-    { label: 'Email', value: lead.email },
-    { label: 'Phone', value: lead.phone },
-    { label: 'Lead Source', value: lead.lead_source },
-    { label: 'Assigned To', value: lead.assigned_to },
-    { label: 'Deal Value', value: `LKR ${lead.deal_value?.toLocaleString()}` },
-    { label: 'Created', value: new Date(lead.created_at).toLocaleDateString() },
-    { label: 'Last Updated', value: new Date(lead.updated_at).toLocaleDateString() },
+    { label: 'Email', value: lead.email, icon: Mail },
+    { label: 'Phone', value: lead.phone, icon: Phone },
+    { label: 'Lead Source', value: lead.lead_source, icon: Briefcase },
+    { label: 'Assigned To', value: lead.assigned_to, icon: User },
+    { label: 'Deal Value', value: `LKR ${lead.deal_value?.toLocaleString()}`, icon: DollarSign },
+    { label: 'Created', value: new Date(lead.created_at).toLocaleDateString(), icon: Calendar },
+    { label: 'Last Updated', value: new Date(lead.updated_at).toLocaleDateString(), icon: Calendar },
   ];
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">{lead.lead_name}</h1>
-          <p className="text-gray-500">{lead.company_name}</p>
-        </div>
-        <div className="flex gap-2">
-          <LeadStatusBadge status={lead.status} />
+    <div className="p-8 max-w-3xl mx-auto">
+      <button
+        onClick={() => navigate('/leads')}
+        className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 mb-6 transition"
+      >
+        <ArrowLeft size={15} />
+        Back to Leads
+      </button>
+
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-5">
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">{lead.lead_name}</h1>
+            <p className="text-gray-400 text-sm mt-0.5">{lead.company_name}</p>
+            <div className="mt-3">
+              <LeadStatusBadge status={lead.status} />
+            </div>
+          </div>
           <button
             onClick={() => navigate(`/leads/${id}/edit`)}
-            className="bg-yellow-500 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-yellow-600 transition"
-          >Edit</button>
-          <button
-            onClick={() => navigate('/leads')}
-            className="bg-gray-100 text-gray-700 px-4 py-1.5 rounded-lg text-sm hover:bg-gray-200 transition"
-          >Back</button>
+            className="flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-200 transition"
+          >
+            <Pencil size={14} />
+            Edit Lead
+          </button>
         </div>
-      </div>
 
-      <div className="bg-white rounded-xl shadow p-6 mb-6">
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">Lead Details</h2>
-        <div className="grid grid-cols-2 gap-4">
-          {details.map(d => (
-            <div key={d.label}>
-              <p className="text-xs text-gray-400 uppercase">{d.label}</p>
-              <p className="text-gray-800 font-medium">{d.value || '—'}</p>
+        <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+          {details.map(({ label, value, icon: Icon }) => (
+            <div key={label} className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0">
+                <Icon size={14} className="text-gray-400" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-400">{label}</p>
+                <p className="text-sm font-medium text-gray-800 mt-0.5">{value || '—'}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow p-6">
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">Notes</h2>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-sm font-semibold text-gray-700 mb-4">Notes</h2>
 
         <form onSubmit={addNote} className="flex gap-2 mb-6">
           <input
             type="text"
             value={note}
             onChange={e => setNote(e.target.value)}
-            placeholder="Add a note..."
-            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Write a note..."
+            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="submit"
             disabled={submitting}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition disabled:opacity-50"
           >
-            {submitting ? 'Adding...' : 'Add Note'}
+            <Send size={14} />
+            {submitting ? 'Adding...' : 'Add'}
           </button>
         </form>
 
         {lead.notes?.length === 0 ? (
-          <p className="text-gray-400 text-sm">No notes yet.</p>
+          <p className="text-sm text-gray-400 text-center py-6">No notes yet. Add the first one above.</p>
         ) : (
           <div className="space-y-3">
             {lead.notes?.map(n => (
-              <div key={n.id} className="bg-gray-50 rounded-lg p-4">
-                <p className="text-gray-800 text-sm">{n.content}</p>
-                <div className="flex justify-between items-center mt-2">
+              <div key={n.id} className="bg-gray-50 rounded-xl p-4">
+                <p className="text-sm text-gray-800">{n.content}</p>
+                <div className="flex justify-between items-center mt-3">
                   <p className="text-xs text-gray-400">
                     {n.created_by} · {new Date(n.created_at).toLocaleString()}
                   </p>
                   <button
                     onClick={() => deleteNote(n.id)}
-                    className="text-red-400 hover:text-red-600 text-xs"
-                  >Delete</button>
+                    className="p-1 text-gray-300 hover:text-red-500 transition"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </div>
             ))}
