@@ -1,31 +1,40 @@
 import { NavLink } from 'react-router-dom';
+import { LayoutDashboard, Users } from 'lucide-react';
 
 const links = [
-  { to: '/', label: '📊 Dashboard' },
-  { to: '/leads', label: '👥 Leads' },
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/leads', label: 'Leads', icon: Users },
 ];
 
 export default function Sidebar() {
   return (
-    <aside className="w-56 bg-gray-900 min-h-screen p-4">
-      <nav className="space-y-1 mt-4">
-        {links.map(link => (
+    <aside className="w-60 bg-gray-950 min-h-screen flex flex-col py-6 px-3">
+      <div className="px-3 mb-8">
+        <h1 className="text-lg font-bold text-white tracking-tight">CRM Portal</h1>
+        <p className="text-xs text-gray-500 mt-0.5">Lead Management</p>
+      </div>
+      <nav className="space-y-1 flex-1">
+        {links.map(({ to, label, icon: Icon }) => (
           <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.to === '/'}
+            key={to}
+            to={to}
+            end={to === '/'}
             className={({ isActive }) =>
-              `block px-4 py-2.5 rounded-lg text-sm transition ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-blue-600 text-white font-medium'
+                  ? 'bg-blue-600 text-white'
                   : 'text-gray-400 hover:bg-gray-800 hover:text-white'
               }`
             }
           >
-            {link.label}
+            <Icon size={16} />
+            {label}
           </NavLink>
         ))}
       </nav>
+      <div className="px-3 pt-4 border-t border-gray-800">
+        <p className="text-xs text-gray-600">v1.0.0</p>
+      </div>
     </aside>
   );
 }
