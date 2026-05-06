@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -10,15 +11,25 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase();
+
   return (
     <nav className="bg-white border-b border-gray-200 px-6 py-3 flex justify-between items-center">
-      <h1 className="text-lg font-bold text-blue-600">CRM Portal</h1>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600">👤 {user?.name}</span>
+      <div>
+        <p className="text-xs text-gray-400">Welcome back</p>
+        <p className="text-sm font-semibold text-gray-800">{user?.name}</p>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">
+          {initials}
+        </div>
         <button
           onClick={handleLogout}
-          className="text-sm text-red-500 hover:text-red-700 transition"
-        >Logout</button>
+          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-red-500 transition"
+        >
+          <LogOut size={15} />
+          Logout
+        </button>
       </div>
     </nav>
   );
