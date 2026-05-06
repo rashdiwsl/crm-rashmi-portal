@@ -5,13 +5,14 @@ import LeadStatusBadge from '../components/LeadStatusBadge';
 
 const STATUSES = ['', 'New', 'Contacted', 'Qualified', 'Proposal Sent', 'Won', 'Lost'];
 const SOURCES = ['', 'Website', 'LinkedIn', 'Referral', 'Cold Email', 'Event'];
-
+const SALESPEOPLE = ['', 'Admin User', 'Rashmi Silva'];
 export default function Leads() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [status, setStatus] = useState('');
-  const [source, setSource] = useState('');
+const [status, setStatus] = useState('');
+const [source, setSource] = useState('');
+const [assignedTo, setAssignedTo] = useState('');  
   const navigate = useNavigate();
 
   const fetchLeads = () => {
@@ -20,13 +21,14 @@ export default function Leads() {
     if (search) params.search = search;
     if (status) params.status = status;
     if (source) params.source = source;
+    if (assignedTo)  { params.assigned_to = assignedTo; }
     api.get('/leads', { params }).then(res => {
       setLeads(res.data);
       setLoading(false);
     });
   };
 
-  useEffect(() => { fetchLeads(); }, [search, status, source]);
+  useEffect(() => { fetchLeads(); }, [search, status, source, assignedTo]);
 
   const deleteLead = async (id) => {
     if (!confirm('Delete this lead?')) return;
@@ -62,12 +64,12 @@ export default function Leads() {
           {STATUSES.map(s => <option key={s} value={s}>{s || 'All Statuses'}</option>)}
         </select>
         <select
-          value={source}
-          onChange={e => setSource(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          {SOURCES.map(s => <option key={s} value={s}>{s || 'All Sources'}</option>)}
-        </select>
+  value={assignedTo}
+  onChange={e => setAssignedTo(e.target.value)}
+  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+>
+  {SALESPEOPLE.map(s => <option key={s} value={s}>{s || 'All Salespeople'}</option>)}
+</select>
       </div>
 
       <div className="bg-white rounded-xl shadow overflow-hidden">
