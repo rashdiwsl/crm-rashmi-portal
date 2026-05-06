@@ -1,16 +1,59 @@
-# React + Vite
+# CRM Rashmi Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for the CRM Lead Management System built for the SE Internship assessment.
 
-Currently, two official plugins are available:
+## Tech Stack
+- React (Vite)
+- Tailwind CSS
+- Axios
+- React Router DOM
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- Login with JWT authentication
+- Dashboard with live stats
+- Leads list with search and filters
+- Create, edit, delete leads
+- Lead detail view
+- Add and delete notes
+- Filter by status, source, assigned salesperson
 
-## React Compiler
+## Setup Instructions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Clone the repo
+```bash
+git clone https://github.com/YOUR_USERNAME/crm-rashmi-portal.git
+cd crm-rashmi-portal
+```
 
-## Expanding the ESLint configuration
+### 2. Install dependencies
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Start the app
+```bash
+npm run dev
+```
+
+App runs on http://localhost:5173
+
+> Make sure crm-rashmi-service backend is running on port 5000 first.
+
+## Test Credentials
+| Email | Password |
+|-------|----------|
+| admin@example.com | password123 |
+
+## Environment
+No .env needed. API base URL is set to http://localhost:5000/api in src/api/axios.js
+
+## Known Limitations
+- Not deployed (runs locally only)
+- No pagination
+- No dark mode
+
+## Reflection
+Building the frontend taught me how to manage global auth state using React Context,
+and how to connect a React app to a REST API using Axios interceptors for automatic
+JWT token injection on every request.
+
