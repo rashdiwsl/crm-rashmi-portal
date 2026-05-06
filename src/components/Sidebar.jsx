@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users } from 'lucide-react';
+import { LayoutDashboard, Users, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 
@@ -8,7 +8,7 @@ const links = [
   { to: '/leads', label: 'Leads', icon: Users },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }) {
   const [leadCount, setLeadCount] = useState(null);
 
   useEffect(() => {
@@ -18,10 +18,18 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="w-60 bg-gray-950 min-h-screen flex flex-col py-6 px-3">
-      <div className="px-3 mb-8">
-        <h1 className="text-lg font-bold text-white tracking-tight">CRM Portal</h1>
-        <p className="text-xs text-gray-500 mt-0.5">Lead Management</p>
+    <aside className="w-60 bg-gray-950 h-screen flex flex-col py-6 px-3">
+      <div className="px-3 mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-bold text-white tracking-tight">CRM Portal</h1>
+          <p className="text-xs text-gray-500 mt-0.5">Lead Management</p>
+        </div>
+        <button
+          onClick={onClose}
+          className="md:hidden p-1 text-gray-500 hover:text-white transition"
+        >
+          <X size={18} />
+        </button>
       </div>
       <nav className="space-y-1 flex-1">
         {links.map(({ to, label, icon: Icon }) => (
@@ -29,6 +37,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             end={to === '/'}
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
