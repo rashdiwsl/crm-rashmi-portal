@@ -14,6 +14,7 @@ Frontend for the CRM Lead Management System
 | Email | Password |
 |-------|----------|
 | admin@example.com | password123 |
+| rashmi@example.com | password123 |
 
 > ⚠️ Note: Backend runs on Render free tier. First login after inactivity may take ~30 seconds to wake up. Please wait and try again.
 
