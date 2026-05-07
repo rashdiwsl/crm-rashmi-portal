@@ -3,7 +3,7 @@
 Frontend for the CRM Lead Management System 
 
 ## 📄 Full Project Documentation
-[View Complete Project Documentation](https://docs.google.com/document/d/1dmyBJrCm9WAt9mMHLWn-fVDW9ONAr_usApF42TjYXyA/edit?usp=sharing)
+[View Complete Project Documentation](https://drive.google.com/file/d/1e80M_J_5s01ooRv9SYLK3NDffAg91bE5/view?usp=drive_link)
 
 ## 🔗 Links
 - **Live App:** https://crm-rashmi-portal.vercel.app
