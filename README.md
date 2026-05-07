@@ -68,21 +68,7 @@ App runs on http://localhost:5173
 No `.env` file needed for local development. For production, set `VITE_API_URL` in your Vercel project settings.
 
 ## 📁 Project Structure
-src/
-├── api/
-│   └── axios.js            ← Axios instance + JWT interceptor
-├── components/
-│   ├── Navbar.jsx           ← Top bar with user info + logout
-│   ├── Sidebar.jsx          ← Navigation with live lead count badge
-│   └── LeadStatusBadge.jsx  ← Color-coded status pill
-├── context/
-│   └── AuthContext.jsx      ← Global auth state (login/logout/token)
-└── pages/
-├── Login.jsx            ← Login form with error handling
-├── Dashboard.jsx        ← Stats overview + win rate
-├── Leads.jsx            ← Leads table with search and filters
-├── LeadDetail.jsx       ← Lead info + notes
-└── LeadForm.jsx         ← Create and edit lead
+![Project Structure](./screenshots/folder-structure.png)
 
 ## ⚠️ Known Limitations
 - Render backend may take ~30 seconds to wake up after inactivity
